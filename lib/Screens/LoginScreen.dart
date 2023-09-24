@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_fierbase/Screens/PostScreen.dart';
 import 'package:flutter_fierbase/Screens/SignupScreen.dart';
 import 'package:form_validator/form_validator.dart';
-import '../Firebase_Services/splash_services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../Utils/Utils.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,15 +15,47 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final emailtexteditor = TextEditingController();
   final passtexteditor = TextEditingController();
   final formkey = GlobalKey<FormState>();
+  bool loading = false;
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     emailtexteditor.dispose();
     passtexteditor.dispose();
+  }
+
+  void login() {
+    setState(() {
+      loading = true;
+    });
+    _auth
+        .signInWithEmailAndPassword(
+            email: emailtexteditor.text.toString(),
+            password: passtexteditor.text.toString())
+        .then((value) {
+      Utils().toastMessage(value.user!.email.toString());
+
+      setState(() {
+        loading = false;
+      });
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: ((context) {
+            return PostScreen();
+          }),
+        ),
+      );
+    }).onError((error, stackTrace) {
+      Utils().toastMessage(error.toString());
+
+      setState(() {
+        loading = false;
+      });
+    });
   }
 
   @override
@@ -103,7 +138,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 20),
                     TextButton(
                       onPressed: () {
-                        if (formkey.currentState!.validate()) {}
+                        if (formkey.currentState!.validate()) {
+                          login();
+                        }
                       },
                       child: Container(
                         height: 50,
@@ -114,12 +151,17 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: Colors.purple,
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: const Text(
-                          'Login',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
+                        child: loading
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 3,
+                              )
+                            : const Text(
+                                'Login',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
                       ),
                     ),
                     const SizedBox(height: 10),
