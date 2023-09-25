@@ -15,12 +15,8 @@ class _PostScreenState extends State<PostScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        drawer: Drawer(
-          backgroundColor: Colors.deepPurple[200],
-          semanticLabel: 'hiii',
-        ),
         appBar: AppBar(
-          iconTheme: IconThemeData(
+          iconTheme: const IconThemeData(
             color: Colors.white,
           ),
           backgroundColor: Colors.purple,
