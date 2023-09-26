@@ -39,9 +39,15 @@ class _LoginWithPhoneState extends State<LoginWithPhone> {
                   });
                   _auth.verifyPhoneNumber(
                       phoneNumber: phonecontroller.text.toString(),
-                      verificationCompleted: (_) {
+                      verificationCompleted:
+                          (PhoneAuthCredential credential) async {
                         setState(() {
                           loading = false;
+                        });
+                        await _auth
+                            .signInWithCredential(credential)
+                            .then((value) {
+                          Utils().toastMessage('Login Successfully');
                         });
                       },
                       verificationFailed: (e) {
