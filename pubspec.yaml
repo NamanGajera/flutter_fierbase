@@ -41,6 +41,7 @@ dependencies:
   firebase_storage: ^11.2.7
   fluttertoast: ^8.2.2
   form_validator: ^2.1.1
+  firebase_database: ^10.2.6
 
 dev_dependencies:
   flutter_test:
