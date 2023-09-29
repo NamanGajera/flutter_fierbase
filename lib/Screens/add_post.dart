@@ -17,6 +17,10 @@ class _AddPostState extends State<AddPost> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Add Post'),
+        backgroundColor: Colors.purple,
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
@@ -25,8 +29,19 @@ class _AddPostState extends State<AddPost> {
             TextFormField(
               controller: postcontroller,
               maxLines: 4,
-              decoration:
-                  const InputDecoration(hintText: 'What is in your mind?'),
+              decoration: InputDecoration(
+                hintText: 'What is in your mind?',
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: const BorderSide(
+                    color: Colors.purple,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.purple),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
             ),
             const SizedBox(height: 30),
             InkWell(
