@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_fierbase/Screens/LoginScreen.dart';
 import 'package:flutter_fierbase/Screens/add_post.dart';
+import 'package:flutter_fierbase/Utils/Utils.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({super.key});
@@ -18,6 +19,8 @@ class _PostScreenState extends State<PostScreen> {
   final auth = FirebaseAuth.instance;
   final Ref = FirebaseDatabase.instance.ref('Post');
   final SearchFiltercontrolle = TextEditingController();
+
+  final EditController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -86,15 +89,68 @@ class _PostScreenState extends State<PostScreen> {
                   query: Ref,
                   itemBuilder: (context, snapshot, animation, index) {
                     final title = snapshot.child('title').value.toString();
-
                     if (SearchFiltercontrolle.text.isEmpty) {
                       return ListTile(
-                        title: Text(snapshot.child('title').value.toString()),
+                        title: Text(
+                          snapshot.child('title').value.toString(),
+                        ),
+                        trailing: PopupMenuButton(
+                          icon: const Icon(Icons.more_vert),
+                          itemBuilder: (context) => [
+                            PopupMenuItem(
+                                value: 1,
+                                child: ListTile(
+                                  leading: const Icon(Icons.edit),
+                                  title: const Text('Edit'),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                    showMyDialog(title,
+                                        snapshot.child('id').value.toString());
+                                  },
+                                )),
+                            PopupMenuItem(
+                                value: 1,
+                                onTap: () {
+                                  Ref.child(snapshot
+                                          .child('title')
+                                          .value
+                                          .toString())
+                                      .remove();
+                                  Navigator.pop(context);
+                                },
+                                child: const ListTile(
+                                  leading: Icon(Icons.delete),
+                                  title: Text('Delete'),
+                                )),
+                          ],
+                        ),
                       );
                     } else if (title.toLowerCase().contains(
                         SearchFiltercontrolle.text.toLowerCase().toString())) {
                       return ListTile(
                         title: Text(snapshot.child('title').value.toString()),
+                        trailing: PopupMenuButton(
+                          icon: const Icon(Icons.more_vert),
+                          itemBuilder: (context) => [
+                            PopupMenuItem(
+                                value: 1,
+                                child: ListTile(
+                                  leading: const Icon(Icons.edit),
+                                  title: const Text('Edit'),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                    showMyDialog(title,
+                                        snapshot.child('id').value.toString());
+                                  },
+                                )),
+                            const PopupMenuItem(
+                                value: 1,
+                                child: ListTile(
+                                  leading: Icon(Icons.delete),
+                                  title: Text('Delete'),
+                                )),
+                          ],
+                        ),
                       );
                     } else {
                       return Container();
@@ -121,6 +177,47 @@ class _PostScreenState extends State<PostScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> showMyDialog(String title, String id) async {
+    EditController.text = title;
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('UPDATE'),
+            content: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: TextField(
+                controller: EditController,
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Ref.child(id)
+                      .update({
+                        'title': EditController.text.toString(),
+                      })
+                      .then((value) {})
+                      .onError((error, stackTrace) {
+                        Utils().toastMessage(error.toString());
+                      });
+                },
+                child: const Text('Update'),
+              ),
+            ],
+          );
+        });
   }
 }
 

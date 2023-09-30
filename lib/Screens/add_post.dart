@@ -49,11 +49,11 @@ class _AddPostState extends State<AddPost> {
                 setState(() {
                   loading = true;
                 });
-                databaseRef
-                    .child(DateTime.now().millisecondsSinceEpoch.toString())
-                    .set({
+
+                String id = DateTime.now().millisecondsSinceEpoch.toString();
+                databaseRef.child(id).set({
                   'title': postcontroller.text.toString(),
-                  'id': DateTime.now().millisecondsSinceEpoch.toString()
+                  'id': id
                 }).then((value) {
                   setState(() {
                     loading = false;
