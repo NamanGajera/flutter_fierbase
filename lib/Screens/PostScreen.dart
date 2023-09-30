@@ -25,28 +25,6 @@ class _PostScreenState extends State<PostScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          iconTheme: const IconThemeData(
-            color: Colors.white,
-          ),
-          backgroundColor: Colors.purple,
-          title: const Text('Post'),
-          centerTitle: true,
-          automaticallyImplyLeading: false,
-          actions: [
-            IconButton(
-              onPressed: () {
-                auth.signOut().then((value) {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) {
-                    return const LoginScreen();
-                  }));
-                });
-              },
-              icon: const Icon(Icons.logout),
-            )
-          ],
-        ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Column(
@@ -111,12 +89,9 @@ class _PostScreenState extends State<PostScreen> {
                             PopupMenuItem(
                                 value: 1,
                                 onTap: () {
-                                  Ref.child(snapshot
-                                          .child('title')
-                                          .value
-                                          .toString())
+                                  Ref.child(
+                                          snapshot.child('id').value.toString())
                                       .remove();
-                                  Navigator.pop(context);
                                 },
                                 child: const ListTile(
                                   leading: Icon(Icons.delete),
