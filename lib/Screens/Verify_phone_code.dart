@@ -2,7 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_fierbase/Screens/PostScreen.dart';
+import 'package:flutter_fierbase/Screens/HomeScreen.dart';
 
 import '../Utils/Utils.dart';
 
@@ -27,6 +27,8 @@ class _VerifyCodeState extends State<VerifyCode> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 30),
             TextFormField(
@@ -35,6 +37,7 @@ class _VerifyCodeState extends State<VerifyCode> {
                 hintText: '6 digit code',
               ),
             ),
+            const SizedBox(height: 10),
             InkWell(
               onTap: () async {
                 setState(() {
@@ -51,7 +54,7 @@ class _VerifyCodeState extends State<VerifyCode> {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const PostScreen()));
+                          builder: (context) => const HomeScreen()));
                 } catch (e) {
                   setState(() {
                     loading = false;
