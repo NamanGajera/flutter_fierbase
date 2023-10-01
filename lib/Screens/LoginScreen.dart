@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_fierbase/Screens/ForgotPasswor.dart';
+import 'package:flutter_fierbase/Screens/HomeScreen.dart';
 import 'package:flutter_fierbase/Screens/Login_with_phone.dart';
 import 'package:flutter_fierbase/Screens/PostScreen.dart';
 import 'package:flutter_fierbase/Screens/SignupScreen.dart';
@@ -46,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
         context,
         MaterialPageRoute(
           builder: ((context) {
-            return PostScreen();
+            return const HomeScreen();
           }),
         ),
       );
@@ -165,6 +167,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                     color: Colors.white,
                                   ),
                                 ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return const ForgotPassword();
+                              }),
+                            );
+                          },
+                          child: const Text('Forgot Password?'),
                         ),
                       ),
                       const SizedBox(height: 10),
