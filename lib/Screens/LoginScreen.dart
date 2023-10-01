@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_fierbase/Screens/ForgotPasswor.dart';
 import 'package:flutter_fierbase/Screens/HomeScreen.dart';
 import 'package:flutter_fierbase/Screens/Login_with_phone.dart';
-import 'package:flutter_fierbase/Screens/PostScreen.dart';
 import 'package:flutter_fierbase/Screens/SignupScreen.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';

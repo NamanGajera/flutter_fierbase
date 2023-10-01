@@ -4,7 +4,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_fierbase/Screens/LoginScreen.dart';
 import 'package:flutter_fierbase/Screens/add_post.dart';
 import 'package:flutter_fierbase/Utils/Utils.dart';
 
