@@ -57,6 +57,9 @@ class _PostScreenState extends State<PostScreen> {
                     ),
                   ),
                 ),
+                onTapOutside: (event) {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
                 onChanged: (String value) {
                   setState(() {});
                 },
